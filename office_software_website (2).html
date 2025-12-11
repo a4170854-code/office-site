@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Офісне програмне забезпечення</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 60px #00ffff;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+            }
+            to {
+                text-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff, 0 0 80px #00ffff;
+            }
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 30px 0;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-btn {
+            background: linear-gradient(145deg, #1a1f3a, #0d1123);
+            border: 2px solid #00ffff;
+            color: #00ffff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.5s, height 0.5s;
+        }
+
+        .nav-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.6), 0 10px 30px rgba(0, 255, 255, 0.3);
+            border-color: #ff00ff;
+            color: #ff00ff;
+        }
+
+        .nav-btn.active {
+            background: linear-gradient(145deg, #00ffff, #0099cc);
+            color: #0a0e27;
+            border-color: #00ffff;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h2 {
+            color: #00ffff;
+            font-size: 2.5em;
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px #00ffff;
+            border-bottom: 3px solid #00ffff;
+            padding-bottom: 15px;
+            display: inline-block;
+        }
+
+        h3 {
+            color: #ff00ff;
+            font-size: 1.8em;
+            margin: 30px 0 15px 0;
+            text-shadow: 0 0 10px #ff00ff;
+        }
+
+        p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #e0e0e0;
+        }
+
+        ul {
+            margin: 20px 0;
+            padding-left: 40px;
+        }
+
+        li {
+            margin: 15px 0;
+            line-height: 1.6;
+            color: #e0e0e0;
+            position: relative;
+        }
+
+        li::before {
+            content: '▹';
+            color: #00ffff;
+            font-weight: bold;
+            font-size: 1.5em;
+            position: absolute;
+            left: -30px;
+        }
+
+        .feature-box {
+            background: linear-gradient(145deg, rgba(0, 255, 255, 0.1), rgba(255, 0, 255, 0.1));
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            transition: all 0.3s ease;
+        }
+
+        .feature-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.4);
+            border-color: #ff00ff;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .card {
+            background: linear-gradient(145deg, #1a1f3a, #0d1123);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 30px;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.6);
+            border-color: #ff00ff;
+        }
+
+        .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: inline-block;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff;
+            text-shadow: 0 0 10px #00ffff;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .neon-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: moveAround 20s infinite;
+        }
+
+        .circle1 {
+            width: 300px;
+            height: 300px;
+            background: #00ffff;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .circle2 {
+            width: 400px;
+            height: 400px;
+            background: #ff00ff;
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .circle3 {
+            width: 250px;
+            height: 250px;
+            background: #00ff00;
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes moveAround {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(100px, 100px);
+            }
+            50% {
+                transform: translate(-100px, 50px);
+            }
+            75% {
+                transform: translate(50px, -100px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background-animation">
+        <div class="neon-circle circle1"></div>
+        <div class="neon-circle circle2"></div>
+        <div class="neon-circle circle3"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>💻 Офісне програмне забезпечення</h1>
+            <p style="font-size: 1.2em; color: #00ffff;">Сучасні інструменти для професійної роботи</p>
+        </header>
+
+        <nav>
+            <div class="nav-buttons">
+                <button class="nav-btn active" onclick="showSection('home')">🏠 Головна</button>
+                <button class="nav-btn" onclick="showSection('word')">📝 Word</button>
+                <button class="nav-btn" onclick="showSection('excel')">📊 Excel</button>
+                <button class="nav-btn" onclick="showSection('powerpoint')">📽️ PowerPoint</button>
+                <button class="nav-btn" onclick="showSection('outlook')">📧 Outlook</button>
+                <button class="nav-btn" onclick="showSection('access')">🗄️ Access</button>
+            </div>
+        </nav>
+
+        <div id="home" class="content-section active">
+            <h2>Що таке офісне програмне забезпечення?</h2>
+            <p>Офісне програмне забезпечення (ОПЗ) — це комплекс програм, призначених для автоматизації офісної діяльності, обробки текстових документів, електронних таблиць, презентацій та управління інформацією.</p>
+            
+            <div class="feature-box">
+                <h3>🎯 Основні можливості ОПЗ:</h3>
+                <ul>
+                    <li>Створення та редагування текстових документів</li>
+                    <li>Робота з електронними таблицями та розрахунками</li>
+                    <li>Підготовка презентацій та графічних матеріалів</li>
+                    <li>Управління електронною поштою та контактами</li>
+                    <li>Організація баз даних та інформації</li>
+                    <li>Спільна робота над проектами</li>
+                </ul>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">🚀</div>
+                    <h3>Продуктивність</h3>
+                    <p>Підвищення ефективності роботи через автоматизацію рутинних завдань</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🤝</div>
+                    <h3>Співпраця</h3>
+                    <p>Можливість спільної роботи над документами в реальному часі</p>
+                </div>
+                <div class="card">
+                    <div class="icon">☁️</div>
+                    <h3>Хмарні технології</h3>
+                    <p>Доступ до документів з будь-якого пристрою через інтернет</p>
+                </div>
+            </div>
+
+            <div class="feature-box">
+                <h3>📦 Популярні офісні пакети:</h3>
+                <ul>
+                    <li><strong>Microsoft Office</strong> — найпопулярніший офісний пакет від Microsoft</li>
+                    <li><strong>Google Workspace</strong> — хмарний офісний пакет від Google</li>
+                    <li><strong>LibreOffice</strong> — безкоштовний офісний пакет з відкритим кодом</li>
+                    <li><strong>Apache OpenOffice</strong> — альтернативний безкоштовний офісний пакет</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="word" class="content-section">
+            <h2>📝 Microsoft Word</h2>
+            <p>Microsoft Word — найпопулярніший текстовий редактор у світі, призначений для створення, редагування та форматування текстових документів.</p>
+            
+            <div class="feature-box">
+                <h3>⭐ Основні функції:</h3>
+                <ul>
+                    <li>Створення та редагування текстових документів будь-якої складності</li>
+                    <li>Форматування тексту (шрифти, кольори, стилі)</li>
+                    <li>Вставка зображень, таблиць, діаграм</li>
+                    <li>Перевірка правопису та граматики</li>
+                    <li>Створення змісту та покажчиків</li>
+                    <li>Співпраця в реальному часі</li>
+                    <li>Шаблони для різних типів документів</li>
+                </ul>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">📄</div>
+                    <h3>Документи</h3>
+                    <p>Звіти, листи, резюме, наукові роботи</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🎨</div>
+                    <h3>Дизайн</h3>
+                    <p>Гнучке форматування та стилізація</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔄</div>
+                    <h3>Сумісність</h3>
+                    <p>Підтримка різних форматів файлів</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="excel" class="content-section">
+            <h2>📊 Microsoft Excel</h2>
+            <p>Microsoft Excel — потужний табличний редактор для роботи з числовими даними, розрахунками та аналізом інформації.</p>
+            
+            <div class="feature-box">
+                <h3>⭐ Основні можливості:</h3>
+                <ul>
+                    <li>Створення електронних таблиць та розрахунків</li>
+                    <li>Понад 400 вбудованих функцій для аналізу даних</li>
+                    <li>Побудова діаграм та графіків</li>
+                    <li>Зведені таблиці для аналізу великих обсягів даних</li>
+                    <li>Макрosi та автоматизація завдань</li>
+                    <li>Фільтрація та сортування даних</li>
+                    <li>Умовне форматування</li>
+                </ul>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">🔢</div>
+                    <h3>Розрахунки</h3>
+                    <p>Фінансовий аналіз, бухгалтерія, статистика</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📈</div>
+                    <h3>Візуалізація</h3>
+                    <p>Діаграми, графіки, дашборди</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🎯</div>
+                    <h3>Аналіз</h3>
+                    <p>Big Data, прогнозування, моделювання</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="powerpoint" class="content-section">
+            <h2>📽️ Microsoft PowerPoint</h2>
+            <p>Microsoft PowerPoint — програма для створення презентацій, що дозволяє ефективно представляти інформацію за допомогою слайдів.</p>
+            
+            <div class="feature-box">
+                <h3>⭐ Ключові функції:</h3>
+                <ul>
+                    <li>Створення професійних презентацій</li>
+                    <li>Готові шаблони та теми оформлення</li>
+                    <li>Анімація об'єктів та переходи між слайдами</li>
+                    <li>Вставка мультимедіа (відео, аудіо, зображення)</li>
+                    <li>Режим доповідача для зручного виступу</li>
+                    <li>Експорт у різні формати (PDF, відео)</li>
+                    <li>Спільна робота над презентаціями</li>
+                </ul>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">🎤</div>
+                    <h3>Виступи</h3>
+                    <p>Конференції, зустрічі, захист проектів</p>
+                </div>
+                <div class="card">
+                    <div class="icon">✨</div>
+                    <h3>Ефекти</h3>
+                    <p>Анімація, переходи, інтерактивність</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🎬</div>
+                    <h3>Мультимедіа</h3>
+                    <p>Відео, аудіо, інтерактивні елементи</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="outlook" class="content-section">
+            <h2>📧 Microsoft Outlook</h2>
+            <p>Microsoft Outlook — комплексний клієнт електронної пошти та організатор особистої інформації для ефективного управління комунікаціями.</p>
+            
+            <div class="feature-box">
+                <h3>⭐ Основні компоненти:</h3>
+                <ul>
+                    <li>Управління електронною поштою</li>
+                    <li>Календар для планування зустрічей та подій</li>
+                    <li>Контакти та адресна книга</li>
+                    <li>Задачі та нагадування</li>
+                    <li>Нотатки для швидких записів</li>
+                    <li>Інтеграція з іншими додатками Office</li>
+                    <li>Правила автоматичної обробки пошти</li>
+                </ul>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">✉️</div>
+                    <h3>Пошта</h3>
+                    <p>Ефективне управління email-комунікацією</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📅</div>
+                    <h3>Календар</h3>
+                    <p>Планування та організація часу</p>
+                </div>
+                <div class="card">
+                    <div class="icon">👥</div>
+                    <h3>Контакти</h3>
+                    <p>Зберігання інформації про людей</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="access" class="content-section">
+            <h2>🗄️ Microsoft Access</h2>
+            <p>Microsoft Access — система управління базами даних (СУБД) для створення та управління базами даних на настільних комп'ютерах.</p>
+            
+            <div class="feature-box">
+                <h3>⭐ Ключові можливості:</h3>
+                <ul>
+                    <li>Створення реляційних баз даних</li>
+                    <li>Конструктор таблиць та зв'язків</li>
+                    <li>Форми для введення даних</li>
+                    <li>Запити для вибірки інформації</li>
+                    <li>Звіти для представлення даних</li>
+                    <li>Макроси для автоматизації</li>
+                    <li>Інтеграція з іншими програмами Office</li>
+                </ul>
+            </div>
+
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">💾</div>
+                    <h3>Дані</h3>
+                    <p>Зберігання та організація інформації</p>
+                </div>
+                <div class="card">
+                    <div class="icon">🔍</div>
+                    <h3>Запити</h3>
+                    <p>Пошук та фільтрація даних</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📋</div>
+                    <h3>Звіти</h3>
+                    <p>Генерація звітів та аналітика</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2024 Офісне програмне забезпечення | Створено з 💙</p>
+        </footer>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            const buttons = document.querySelectorAll('.nav-btn');
+            
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
